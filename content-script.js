@@ -7,7 +7,6 @@
 	function getStreamerName(imgSrc) {
 	  const regex = /\/fantastreamer-cards\/(.*?)\//;
 	  const match = imgSrc.match(regex);
-	  console.log(match);
 	  return match && match[1];
 	}
   

@@ -10,8 +10,8 @@ This Chrome extension displays additional streamer information when joining a to
 
 ## Installation
 
-1. Clone this repository it as a ZIP file and extract it.
-2. Open Google Chrome and go to `chrome:\/\/extensions\/`.
+1. Clone this repository in a folder or download it as a ZIP file and extract it.
+2. Open Google Chrome and go to `chrome://extensions/`.
 3. Enable "Developer mode" by toggling the switch in the top-right corner.
 4. Click the "Load unpacked" button and select the extension folder you created or extracted in step 1.
 5. The Streamer Info Extension is now installed and active.

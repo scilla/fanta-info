@@ -26,7 +26,7 @@ If you'd like to contribute to this project, feel free to submit a pull request 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information. The author is not relate
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 ## Disclaimer
 

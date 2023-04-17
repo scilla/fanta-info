@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Fantastreamer Info Extension",
+  "version": "1.0",
+  "description": "Display streamer information when joining a tournament",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+  {
+    "matches": ["https://www.fantastreamer.gg/tournaments/*/join"],
+    "js": ["content-script.js"]
+  }
+]
+
+}

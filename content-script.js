@@ -12,19 +12,26 @@
   
 	async function fetchStreamerData(streamerName) {
 	  if (!streamerDataCache.has(streamerName)) {
-		const response = await fetch(
-		  `https://fanta.playerself.com/streamer?startDate=${oneWeekAgo}&name=${streamerName}`
-		);
-		const data = await response.json();
-		streamerDataCache.set(streamerName, data[0]);
+		try {
+		  const response = await fetch(`https://fanta.playerself.com/streamer?startDate=${oneWeekAgo}&name=${streamerName}`);
+		  const data = await response.json();
+		  streamerDataCache.set(streamerName, data[0]);
+		} catch (error) {
+		  console.error(`Error fetching data for ${streamerName}:`, error);
+		  return null;
+		}
 	  }
 	  return streamerDataCache.get(streamerName);
 	}
   
 	function updateStreamerComponent(streamerComponent, streamerData) {
-	  const img = streamerComponent.querySelector("img");
-	  const scoreLine = document.createElement("div");
-	  const hourLine = document.createElement("div");
+	  const img = streamerComponent.querySelector('img');
+	  const infoWrapper = streamerComponent.querySelector('.info-wrapper') || document.createElement('div');
+	  const scoreLine = document.createElement('div');
+	  const hourLine = document.createElement('div');
+  
+	  infoWrapper.innerHTML = '';
+	  infoWrapper.classList.add('info-wrapper');
   
 	  if (streamerData) {
 		scoreLine.textContent = `S: ${streamerData.score.toFixed(1)}`;
@@ -38,21 +45,20 @@
 		streamerComponent.setAttribute("data-score", 0);
 	  }
   
-	  streamerComponent.appendChild(scoreLine);
-	  streamerComponent.appendChild(hourLine);
+	  infoWrapper.appendChild(scoreLine);
+	  infoWrapper.appendChild(hourLine);
+	  streamerComponent.appendChild(infoWrapper);
 	}
   
 	function sortStreamerComponents() {
-	  const firstStreamerComponent = document.querySelector(".relative");
+	  const firstStreamerComponent = document.querySelector('.relative');
 	  if (!firstStreamerComponent) return;
 	  const container = firstStreamerComponent.parentElement;
-	  const streamerComponents = Array.from(
-		container.querySelectorAll(".relative")
-	  );
+	  const streamerComponents = Array.from(container.querySelectorAll('.relative'));
   
 	  streamerComponents.sort((a, b) => {
-		const scoreA = parseFloat(a.getAttribute("data-score"));
-		const scoreB = parseFloat(b.getAttribute("data-score"));
+		const scoreA = parseFloat(a.getAttribute('data-score'));
+		const scoreB = parseFloat(b.getAttribute('data-score'));
 		return scoreB - scoreA;
 	  });
   
@@ -60,30 +66,32 @@
 	}
   
 	async function main() {
-	  const streamerComponents = document.querySelectorAll(".relative");
-	  const promises = [];
+	  const streamerComponents = document.querySelectorAll('.relative');
   
 	  for (const streamerComponent of streamerComponents) {
-		const img = streamerComponent.querySelector("img:nth-of-type(2)");
+		const img = streamerComponent.querySelector('img:nth-of-type(2)');
 		const streamerName = getStreamerName(img.src);
-		  promises.push(fetchStreamerData(streamerName).then((data) => {
-			  updateStreamerComponent(streamerComponent, data);
-			  sortStreamerComponents();
-		  }));
+  
+		if (streamerName) {
+		  const streamerData = await fetchStreamerData(streamerName);
+		  updateStreamerComponent(streamerComponent, streamerData);
+		}
 	  }
+  
+	  sortStreamerComponents();
 	}
   
 	main();
   
 	const observer = new MutationObserver((mutations) => {
 	  mutations.forEach((mutation) => {
-		if (mutation.type === "attributes" && mutation.attributeName === "src") {
+		if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
 		  main();
 		}
 	  });
 	});
   
-	const images = document.querySelectorAll(".relative img:nth-of-type(2)");
+	const images = document.querySelectorAll('.relative img:nth-of-type(2)');
 	images.forEach((img) => observer.observe(img, { attributes: true }));
   })();
   

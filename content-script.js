@@ -81,7 +81,7 @@
 	  sortStreamerComponents();
 	}
   
-	main();
+	window.addEventListener('load', main);
   
 	const observer = new MutationObserver((mutations) => {
 	  mutations.forEach((mutation) => {

@@ -1,5 +1,3 @@
-![Gpt](https://raw.githubusercontent.com/scilla/fanta-info/master/gpt.png)
-
 # Fantastreamer Score Enhancer
 
 This Chrome extension enhances the Fantastreamer website by adding additional information and features to streamline your experience. It displays each streamer's score and hours streamed in the past week, as well as calculating the total score of your top 5 unique streamers.
@@ -23,11 +21,7 @@ This Chrome extension enhances the Fantastreamer website by adding additional in
 3. Open Google Chrome and navigate to `chrome://extensions`.
 4. Enable "Developer mode" in the top-right corner.
 5. Click "Load unpacked" and select the folder where you extracted the ZIP file.
-6. The extension is now installed and active. Navigate to the Fantastreamer website to see the enhancements in action.
-
-## Usage
-
-After installation, simply visit the Fantastreamer website and enjoy the enhanced experience. The extension will automatically display additional information on the streamer cards and update when new cards are loaded or changes are made.
+6. The extension is now installed and active.
 
 ## License
 

@@ -1,4 +1,4 @@
-![Demo](https://github.com/scilla/fanta-info/raw/main/gpt.png)
+![Gpt](https://github.com/scilla/fanta-info/raw/main/gpt.png)
 
 # Fantastreamer Score Enhancer
 

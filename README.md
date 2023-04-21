@@ -1,10 +1,10 @@
-![Gpt](https://github.com/scilla/fanta-info/raw/main/gpt.png)
+![Gpt](https://raw.githubusercontent.com/scilla/fanta-info/master/gpt.png)
 
 # Fantastreamer Score Enhancer
 
 This Chrome extension enhances the Fantastreamer website by adding additional information and features to streamline your experience. It displays each streamer's score and hours streamed in the past week, as well as calculating the total score of your top 5 unique streamers.
 
-![Demo](https://github.com/scilla/fanta-info/raw/main/demo.png)
+![Demo](https://raw.githubusercontent.com/scilla/fanta-info/master/demo.png)
 
 **⚠️ Use this extension at your own risk. We are not responsible for any issues that may arise from its usage.**
 

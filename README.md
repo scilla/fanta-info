@@ -1,33 +1,38 @@
-# Streamer Info Extension
+![Demo](https://github.com/scilla/fanta-info/raw/main/gpt.png)
 
-This Chrome extension displays additional streamer information when joining a tournament and sort the card based on the streamer score.
+# Fantastreamer Score Enhancer
+
+This Chrome extension enhances the Fantastreamer website by adding additional information and features to streamline your experience. It displays each streamer's score and hours streamed in the past week, as well as calculating the total score of your top 5 unique streamers.
+
+![Demo](https://github.com/scilla/fanta-info/raw/main/demo.png)
+
+**⚠️ Use this extension at your own risk. We are not responsible for any issues that may arise from its usage.**
 
 ## Features
 
-- Fetches streamer information.
-- Displays the streamer's score and hours streamed in the last week.
-- Sort the streamers by score.
+- Displays streamer scores and hours streamed in the past week on their cards
+- Takes into account card rarity to adjust streamer scores
+- Sorts streamer cards by their adjusted scores
+- Shows the total score of your top 5 unique streamers (excluding repeated cards)
+- Automatically updates when new cards are loaded
 
 ## Installation
 
-1. Clone this repository in a folder or download it as a ZIP file and extract it.
-2. Open Google Chrome and go to `chrome://extensions/`.
-3. Enable "Developer mode" by toggling the switch in the top-right corner.
-4. Click the "Load unpacked" button and select the extension folder you created or extracted in step 1.
-5. The Streamer Info Extension is now installed and active.
+1. Download the source code as a ZIP file from this repository.
+2. Extract the ZIP file to a folder of your choice.
+3. Open Google Chrome and navigate to `chrome://extensions`.
+4. Enable "Developer mode" in the top-right corner.
+5. Click "Load unpacked" and select the folder where you extracted the ZIP file.
+6. The extension is now installed and active. Navigate to the Fantastreamer website to see the enhancements in action.
 
 ## Usage
 
-The script will automatically run and display the streamer informations.
-
-## Contributing
-
-If you'd like to contribute to this project, feel free to submit a pull request or open an issue to discuss potential changes or improvements.
+After installation, simply visit the Fantastreamer website and enjoy the enhanced experience. The extension will automatically display additional information on the streamer cards and update when new cards are loaded or changes are made.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Disclaimer
 
-Please note that this extension is an independent project and is **not officially affiliated, endorsed, or supported by Fantastreamer or Playerself**. Use it at your own risk. The creator(s) of this extension are not responsible for any issues, damages, or losses that may arise from using this extension.
+This extension is not affiliated with or endorsed by Fantastreamer or any other third party. Use it at your own risk.

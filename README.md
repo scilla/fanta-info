@@ -15,13 +15,13 @@ This Chrome extension enhances the Fantastreamer website by adding additional in
 - Automatically updates when new cards are loaded
 
 ## Installation
-~~
-1. Download the source code as a ZIP file from this repository.
-2. Extract the ZIP file to a folder of your choice.
-3. Open Google Chrome and navigate to `chrome://extensions`.
-4. Enable "Developer mode" in the top-right corner.
-5. Click "Load unpacked" and select the folder where you extracted the ZIP file.
-6. The extension is now installed and active.~~
+
+~~1. Download the source code as a ZIP file from this repository.~~
+~~2. Extract the ZIP file to a folder of your choice.~~
+~~3. Open Google Chrome and navigate to `chrome://extensions`.~~
+~~4. Enable "Developer mode" in the top-right corner.~~
+~~5. Click "Load unpacked" and select the folder where you extracted the ZIP file.~~
+~~6. The extension is now installed and active.~~
 Copy the code and paste it into the browser console
 
 ## License

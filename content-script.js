@@ -84,11 +84,16 @@
   function updateMaxScoreText() {
     const maxScoreText = document.querySelector("#max-score-text");
     const streamerComponents = Array.from(
-      document.querySelectorAll(".relative")
+      document.querySelectorAll(".relative:not(.group)")
     );
     const uniqueStreamers = new Set(
       streamerComponents.map((c) =>
-        getStreamerName(c.querySelector("img:nth-of-type(2)").src)
+        getStreamerName(
+          (
+            c.querySelector("img:nth-of-type(2)") ||
+            c.querySelector("img:nth-of-type(1)")
+          ).src
+        )
       )
     );
     const scores = Array.from(uniqueStreamers)
@@ -105,11 +110,13 @@
   }
 
   function sortStreamerComponents() {
-    const firstStreamerComponent = document.querySelector(".relative");
+    const firstStreamerComponent = document.querySelectorAll(
+      ".relative:not(.group)"
+    );
     if (!firstStreamerComponent) return;
     const container = firstStreamerComponent.parentElement;
     const streamerComponents = Array.from(
-      container.querySelectorAll(".relative")
+      container.querySelectorAll(".relative:not(.group)")
     );
 
     streamerComponents.sort((a, b) => {
@@ -124,10 +131,14 @@
   async function main() {
     createMaxScoreText();
 
-    const streamerComponents = document.querySelectorAll(".relative");
+    const streamerComponents = document.querySelectorAll(
+      ".relative:not(.group)"
+    );
 
     for (const streamerComponent of streamerComponents) {
-      const img = streamerComponent.querySelector("img:nth-of-type(2)");
+      const img =
+        streamerComponent.querySelector("img:nth-of-type(2)") ||
+        streamerComponent.querySelector("img:nth-of-type(1)");
       const streamerName = getStreamerName(img.src);
       const rarity = getRarity(img.src);
 
@@ -152,7 +163,8 @@
       }
     });
   });
-
-  const images = document.querySelectorAll(".relative img:nth-of-type(2)");
+  const images =
+    document.querySelectorAll(".relative:not(.group) img:nth-of-type(2)") ||
+    document.querySelectorAll(".relative:not(.group) img:nth-of-type(1)");
   images.forEach((img) => observer.observe(img, { attributes: true }));
 })();

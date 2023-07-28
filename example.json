@@ -1,0 +1,21 @@
+{
+  "name": "JimmyJoker",
+  "twitch_id": "80678534",
+  "followers": 21914,
+  "online": false,
+  "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/7fec99a0-309b-49b1-83a7-d83385c35603-profile_image-300x300.png",
+  "streams": {
+    "followers_gained": 70,
+    "average_viewers": 217.11764705882354,
+    "peak_viewers": 505,
+    "hour_streamed": 81.24583333333334,
+    "games_played": [
+      ["Fortnite"],
+      ["Just Chatting"],
+      ["Fatal Frame: Maiden of Black Water"],
+      ["Dead by Daylight"]
+    ]
+  },
+  "score": 7.9314011365,
+  "stream_count": 17
+}

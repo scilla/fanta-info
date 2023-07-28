@@ -1,9 +1,8 @@
 (async function () {
   const formatDate = (date) => Math.floor(date.getTime() / 1000);
-  const someWeeksAgo = formatDate(
-    new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)
-  );
-
+  const someWeeksAgo = (n) => someDaysAgo(n * 7);
+  const someDaysAgo = (n) =>
+    formatDate(new Date(new Date() - n * 24 * 60 * 60 * 1000));
   const streamerDataCache = new Map();
   const rarityMultipliers = {
     common: 1,
@@ -25,49 +24,82 @@
     return match && match[1];
   }
 
-  async function fetchStreamerData(streamerName) {
-    if (!streamerDataCache.has(streamerName)) {
+  async function fetchStreamerData(streamerName, days) {
+    const cacheKey = `${streamerName}_${days}`;
+    if (!streamerDataCache.has(cacheKey)) {
       try {
         const response = await fetch(
-          `https://fanta.playerself.com/streamer?startDate=${someWeeksAgo}&name=${streamerName}`
+          `https://fanta.playerself.com/streamer?startDate=${someDaysAgo(
+            days
+          )}&name=${streamerName}`
         );
         const data = await response.json();
-        streamerDataCache.set(streamerName, data[0]);
+        streamerDataCache.set(cacheKey, data[0]);
       } catch (error) {
         console.error(`Error fetching data for ${streamerName}:`, error);
         return null;
       }
     }
-    return streamerDataCache.get(streamerName);
+    return streamerDataCache.get(cacheKey);
   }
 
-  function updateStreamerComponent(streamerComponent, streamerData, rarity) {
+  function updateStreamerComponent(
+    streamerComponent,
+    streamerData3Days,
+    streamerData7Days,
+    rarity
+  ) {
     const img = streamerComponent.querySelector("img");
     const infoWrapper =
       streamerComponent.querySelector(".info-wrapper") ||
       document.createElement("div");
     const scoreLine = document.createElement("div");
+    const scorePreviousLine = document.createElement("div");
     const hourLine = document.createElement("div");
+    const trendLine = document.createElement("div");
 
     infoWrapper.innerHTML = "";
     infoWrapper.classList.add("info-wrapper");
 
-    if (streamerData) {
+    if (streamerData3Days && streamerData7Days) {
       const multiplier = rarityMultipliers[rarity] || 1;
-      const score = streamerData.score * multiplier;
-      scoreLine.textContent = `S: ${score.toFixed(1)}`;
-      hourLine.textContent = `H: ${streamerData.streams.hour_streamed.toFixed(
+      const score3Days = streamerData3Days.score * multiplier;
+      const score7Days = streamerData7Days.score * multiplier;
+      const scorePrevious = (score7Days * 7 - score3Days * 3) / 4;
+
+      scoreLine.textContent = `S: ${score3Days.toFixed(1)}`;
+      scorePreviousLine.textContent = `Δ: ${scorePrevious.toFixed(1)}`;
+      hourLine.textContent = `H: ${streamerData3Days.streams.hour_streamed.toFixed(
         1
       )}`;
-      streamerComponent.setAttribute("data-score", score);
+      const followerIncreasePercentage = (
+        (streamerData3Days.streams.followers_gained /
+          streamerData3Days.followers) *
+        10000
+      ).toFixed(2);
+      trendLine.textContent = `T: ${followerIncreasePercentage}%`;
+
+      streamerComponent.setAttribute("data-score", score3Days);
+      streamerComponent.setAttribute("data-score-previous", scorePrevious);
+      streamerComponent.setAttribute(
+        "data-follower-increase",
+        followerIncreasePercentage
+      );
     } else {
       scoreLine.textContent = `S: 0`;
+      scorePreviousLine.textContent = `Δ: 0`;
       hourLine.textContent = `H: 0`;
+      trendLine.textContent = `T: 0%`;
+
       streamerComponent.setAttribute("data-score", 0);
+      streamerComponent.setAttribute("data-score-previous", 0);
+      streamerComponent.setAttribute("data-follower-increase", 0);
     }
 
     infoWrapper.appendChild(scoreLine);
+    infoWrapper.appendChild(scorePreviousLine);
     infoWrapper.appendChild(hourLine);
+    infoWrapper.appendChild(trendLine);
     streamerComponent.appendChild(infoWrapper);
   }
 
@@ -110,7 +142,7 @@
   }
 
   function sortStreamerComponents() {
-    const firstStreamerComponent = document.querySelectorAll(
+    const firstStreamerComponent = document.querySelector(
       ".relative:not(.group)"
     );
     if (!firstStreamerComponent) return;
@@ -135,6 +167,7 @@
       ".relative:not(.group)"
     );
 
+    let promises = [];
     for (const streamerComponent of streamerComponents) {
       const img =
         streamerComponent.querySelector("img:nth-of-type(2)") ||
@@ -142,12 +175,21 @@
       const streamerName = getStreamerName(img.src);
       const rarity = getRarity(img.src);
 
-      if (streamerName) {
-        const streamerData = await fetchStreamerData(streamerName);
-        updateStreamerComponent(streamerComponent, streamerData, rarity);
+      let job = Promise.all([
+        fetchStreamerData(streamerName, 3),
+        fetchStreamerData(streamerName, 7),
+      ]).then(([streamerData3Days, streamerData7Days]) => {
+        updateStreamerComponent(
+          streamerComponent,
+          streamerData3Days,
+          streamerData7Days,
+          rarity
+        );
         streamerComponent.setAttribute("data-streamer", streamerName);
-      }
+      });
+      promises.push(job);
     }
+    await Promise.all(promises);
 
     sortStreamerComponents();
     updateMaxScoreText();
